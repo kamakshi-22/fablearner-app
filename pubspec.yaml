@@ -43,6 +43,9 @@ dependencies:
   gap: ^3.0.1
   font_awesome_flutter: ^10.5.0
   percent_indicator: ^4.2.3
+  video_player: ^2.7.0
+  chewie: ^1.7.0
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:

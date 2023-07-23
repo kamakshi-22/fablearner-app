@@ -1,9 +1,8 @@
-import 'package:fablearner_app/design/screens/home/home_screen.dart';
+import 'package:fablearner_app/design/screens/home/load_home_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/providers/providers.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,11 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => HomeScreen(
-                            authToken: token,
-                            userDisplayName: username
-                            
-                            ),
+                          builder: (_) => LoadHomeScreen(
+                              authToken: token, userDisplayName: username),
                         ),
                       );
                     } else {

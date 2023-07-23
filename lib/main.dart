@@ -1,4 +1,4 @@
-import 'package:fablearner_app/design/screens/screens.dart';
+import 'package:fablearner_app/design/screens/login/login_screen.dart';
 import 'package:fablearner_app/providers/providers.dart';
 import 'package:fablearner_app/utils/helper.dart';
 import 'package:flutter/material.dart';

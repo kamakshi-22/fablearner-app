@@ -1,4 +1,4 @@
-
+import 'package:fablearner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
@@ -8,6 +8,9 @@ class AppLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator();
+    return const CircularProgressIndicator(
+      color: AppColors.primaryColor,
+      strokeWidth: 6,
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:fablearner_app/design/screens/lesson/load_lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
@@ -82,41 +83,52 @@ class _SectionsScreenState extends State<SectionsScreen>
         final item = items[j]; // current item
         sectionItemsList.add(
           /* LESSON ITEM */
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: appDefaultPadding, vertical: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.solidCircleCheck,
-                      color: item.status.toString().contains("COMPLETED")
-                          ? AppColors.successColor
-                          : AppColors.accentColor,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 12.0),
-                      height: AppLayout.getHeight(24),
-                      width: AppLayout.getHeight(4),
-                      decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () {
+             
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LoadLessonScreen(
+                  lessonId: item.id,
+                  items: items,
+                );
+              }));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: appDefaultPadding, vertical: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.solidCircleCheck,
                         color: item.status.toString().contains("COMPLETED")
                             ? AppColors.successColor
                             : AppColors.accentColor,
-                        borderRadius: BorderRadius.circular(10),
                       ),
-                    )
-                  ],
-                ),
-                Gap(AppLayout.getWidth(20)),
-                Text(
-                  item.title,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeight.bold,
+                      Container(
+                        margin: const EdgeInsets.only(top: 12.0),
+                        height: AppLayout.getHeight(24),
+                        width: AppLayout.getHeight(4),
+                        decoration: BoxDecoration(
+                          color: item.status.toString().contains("COMPLETED")
+                              ? AppColors.successColor
+                              : AppColors.accentColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      )
+                    ],
                   ),
-                ),
-              ],
+                  Gap(AppLayout.getWidth(20)),
+                  Text(
+                    item.title,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -221,3 +233,5 @@ class _SectionsScreenState extends State<SectionsScreen>
     return list;
   }
 }
+
+
