@@ -1,11 +1,14 @@
 import 'package:fablearner_app/design/screens/lesson/load_lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
+import 'package:fablearner_app/providers/auth_provider.dart';
+import 'package:fablearner_app/providers/data_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 class SectionsScreen extends StatefulWidget {
   final CoursesModel course;
@@ -34,6 +37,9 @@ class _SectionsScreenState extends State<SectionsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final dataProvider = Provider.of<DataProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
+    final token = authProvider.authToken!;
     return SafeArea(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -48,12 +54,12 @@ class _SectionsScreenState extends State<SectionsScreen>
             headerSliverBuilder: (context, bool innerBoxIsScrolled) {
               return [buildAppBar(context)];
             },
-            body: buildBody(),
+            body: buildBody(token, dataProvider),
           )),
     );
   }
 
-  Padding buildBody() {
+  Padding buildBody(String token, DataProvider dataProvider) {
     return Padding(
       padding:
           EdgeInsets.only(top: AppLayout.getHeight(appCirclularBorderRadius)),
@@ -66,13 +72,13 @@ class _SectionsScreenState extends State<SectionsScreen>
             )),
         child: TabBarView(
           controller: _tabController,
-          children: buildTabBarView(),
+          children: buildTabBarView(token, dataProvider),
         ),
       ),
     );
   }
 
-  List<Widget> buildTabBarView() {
+  List<Widget> buildTabBarView(String token, DataProvider dataProvider) {
     List<Widget> list = []; // stores section's items
     final sections = widget.course.sections;
     final progressPercent = sections[_tabController!.index].percent;
@@ -85,7 +91,7 @@ class _SectionsScreenState extends State<SectionsScreen>
           /* LESSON ITEM */
           GestureDetector(
             onTap: () {
-             
+              dataProvider.fetchLessonData(item.id, token);
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return LoadLessonScreen(
                   lessonId: item.id,
@@ -233,5 +239,3 @@ class _SectionsScreenState extends State<SectionsScreen>
     return list;
   }
 }
-
-

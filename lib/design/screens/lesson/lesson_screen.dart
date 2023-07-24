@@ -29,6 +29,7 @@ class _LessonScreenState extends State<LessonScreen> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
+    final token = authProvider.authToken!;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -43,7 +44,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   children: [
                     videoHolder(),
                     playButton(context),
-                    lessonDetails(context, authProvider, dataProvider),
+                    lessonDetails(context, token, dataProvider),
                     Center(
                       child: dataProvider.isLoading
                           ? const AppLoadingIndicator()
@@ -133,8 +134,8 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Container lessonDetails(BuildContext context, AuthProvider authProvider,
-      DataProvider dataProvider) {
+  Container lessonDetails(
+      BuildContext context, String token, DataProvider dataProvider) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: AppLayout.getScreenHeight() * 0.4),
@@ -176,7 +177,7 @@ class _LessonScreenState extends State<LessonScreen> {
               style: AppTextStyles.bodyMedium,
             ),
             Gap(AppLayout.getHeight(appDefaultSpacing)),
-            markFinished(authProvider, dataProvider),
+            markFinished(token, dataProvider),
             if (!widget.lesson.results.status.contains("completed"))
               Text(
                 "** This can only be marked once! **",
@@ -191,8 +192,7 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  ElevatedButton markFinished(
-      AuthProvider authProvider, DataProvider dataProvider) {
+  ElevatedButton markFinished(String token, DataProvider dataProvider) {
     return ElevatedButton(
       onPressed: () async {
         try {
@@ -201,12 +201,14 @@ class _LessonScreenState extends State<LessonScreen> {
             return;
           } else {
             final response = await dataProvider.finishLesson(
-                widget.lesson.id.toString(), authProvider.authToken);
+                widget.lesson.id.toString(), token);
             if (!mounted) return;
             if (response.status.contains("error")) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(showErrorSnackBar(response.message));
             } else {
+              dataProvider.fetchCoursesData(token);
+              dataProvider.fetchLessonData(widget.lesson.id, token);
               ScaffoldMessenger.of(context)
                   .showSnackBar(showSuccessSnackBar(response.message));
             }

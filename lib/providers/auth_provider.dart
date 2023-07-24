@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthProvider with ChangeNotifier {
-  String _authToken = '';
-  String get authToken => _authToken;
+  String? _authToken;
+  String? get authToken => _authToken;
 
   String _username = '';
   String get username => _username;

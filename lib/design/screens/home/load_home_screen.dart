@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:fablearner_app/design/screens/home/home_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
+import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/providers/providers.dart';
-import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,8 +29,14 @@ class LoadHomeScreen extends StatelessWidget {
               return const LoadingScreen();
             case ConnectionState.done:
               final courses = snapshot.data;
-              return HomeScreen(
-                  courses: courses, userDisplayName: userDisplayName);
+              if (snapshot.hasError) {
+                // Handle error
+                return ErrorScreen(text: snapshot.error.toString());
+              } else {
+                return HomeScreen(
+                    courses: courses, userDisplayName: userDisplayName);
+              }
+
             default:
               return const ErrorScreen(text: 'Unknown connection state');
           }

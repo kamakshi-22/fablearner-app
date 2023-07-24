@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
               : ElevatedButton(
                   onPressed: () async {
                     await authProvider.fetchAuthToken();
-                    String token = authProvider.authToken;
+                    String? token = authProvider.authToken;
                     String username = authProvider.username;
                     if (!mounted) return;
                     if (token != '' && username != '') {
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => LoadHomeScreen(
-                              authToken: token, userDisplayName: username),
+                              authToken: token!, userDisplayName: username),
                         ),
                       );
                     } else {

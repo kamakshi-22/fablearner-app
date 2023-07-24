@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:fablearner_app/models/courses_model.dart';
@@ -11,8 +12,6 @@ class DataProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  List<CoursesModel> coursesModel = [];
-
   Future<List<CoursesModel>> fetchCoursesData(String authToken) async {
     try {
       final response = await http.get(
@@ -21,7 +20,7 @@ class DataProvider with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         final jsonString = response.body;
-        coursesModel = coursesModelFromJson(jsonString);
+        final coursesModel = coursesModelFromJson(jsonString);
         return coursesModel;
       } else {
         // Handle error response
