@@ -4,14 +4,22 @@ import 'package:fablearner_app/design/screens/home/home_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/providers/providers.dart';
+import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoadHomeScreen extends StatelessWidget {
+class LoadHomeScreen extends StatefulWidget {
   final String userDisplayName;
   final String authToken;
   const LoadHomeScreen(
       {super.key, required this.authToken, required this.userDisplayName});
+
+  @override
+  State<LoadHomeScreen> createState() => _LoadHomeScreenState();
+}
+
+class _LoadHomeScreenState extends State<LoadHomeScreen> {
+  
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class LoadHomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: FutureBuilder(
-        future: dataProvider.fetchCoursesData(authToken),
+        future: dataProvider.fetchCoursesData(widget.authToken),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -30,11 +38,12 @@ class LoadHomeScreen extends StatelessWidget {
             case ConnectionState.done:
               final courses = snapshot.data;
               if (snapshot.hasError) {
-                // Handle error
-                return ErrorScreen(text: snapshot.error.toString());
+                printIfDebug(snapshot.error);
+                return const ErrorScreen(
+                    text: "Encountered error. Please try again.");
               } else {
                 return HomeScreen(
-                    courses: courses, userDisplayName: userDisplayName);
+                    courses: courses, userDisplayName: widget.userDisplayName);
               }
 
             default:

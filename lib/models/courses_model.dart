@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final coursesModel = coursesModelFromJson(jsonString);
+//     final courseModel = courseModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<CoursesModel> coursesModelFromJson(String str) => List<CoursesModel>.from(json.decode(str).map((x) => CoursesModel.fromJson(x)));
+List<CourseModel> courseModelFromJson(String str) => List<CourseModel>.from(json.decode(str).map((x) => CourseModel.fromJson(x)));
 
-String coursesModelToJson(List<CoursesModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String courseModelToJson(List<CourseModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class CoursesModel {
+class CourseModel {
     int id;
     String name;
     String slug;
@@ -42,7 +42,7 @@ class CoursesModel {
     CourseData courseData;
     MetaData metaData;
 
-    CoursesModel({
+    CourseModel({
         required this.id,
         required this.name,
         required this.slug,
@@ -77,7 +77,7 @@ class CoursesModel {
         required this.metaData,
     });
 
-    factory CoursesModel.fromJson(Map<String, dynamic> json) => CoursesModel(
+    factory CourseModel.fromJson(Map<String, dynamic> json) => CourseModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],
@@ -185,7 +185,7 @@ class CourseData {
 }
 
 class Result {
-    int result;
+    double result;
     int pass;
     int countItems;
     int completedItems;
@@ -202,7 +202,7 @@ class Result {
     });
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
-        result: json["result"],
+        result: json["result"]?.toDouble(),
         pass: json["pass"],
         countItems: json["count_items"],
         completedItems: json["completed_items"],
@@ -454,7 +454,7 @@ class Section {
     int courseId;
     String description;
     String order;
-    int percent;
+    dynamic percent;
     List<Item> items;
 
     Section({
@@ -532,14 +532,14 @@ class Item {
     };
 }
 
-enum Graduation { EMPTY, PASSED }
+enum Graduation { PASSED, EMPTY }
 
 final graduationValues = EnumValues({
     "": Graduation.EMPTY,
     "passed": Graduation.PASSED
 });
 
-enum Status { EMPTY, COMPLETED }
+enum Status { COMPLETED, EMPTY }
 
 final statusValues = EnumValues({
     "completed": Status.COMPLETED,

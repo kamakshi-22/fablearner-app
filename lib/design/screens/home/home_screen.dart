@@ -1,5 +1,6 @@
 import 'package:fablearner_app/design/screens/home/course_card.dart';
 import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
+import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
@@ -8,14 +9,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<CoursesModel>? courses;
+  final List<CourseModel>? courses;
   final String userDisplayName;
   const HomeScreen({
     super.key,
     required this.courses,
     required this.userDisplayName,
   });
-
+ 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -62,12 +63,16 @@ class HomeScreen extends StatelessWidget {
                 return CourseCard(
                   course: course,
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return SectionsScreen(
-                        course: course,
-                      );
-                    }));
+                    try {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return SectionsScreen(
+                          course: course,
+                        );
+                      }));
+                    } catch (e) {
+                      rethrow;
+                    }
                   },
                 );
               },

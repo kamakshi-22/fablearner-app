@@ -31,22 +31,25 @@ class _LoginScreenState extends State<LoginScreen> {
               ? const AppLoadingIndicator()
               : ElevatedButton(
                   onPressed: () async {
-                    await authProvider.fetchAuthToken();
-                    String? token = authProvider.authToken;
-                    String username = authProvider.username;
-                    if (!mounted) return;
-                    if (token != '' && username != '') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        showSuccessSnackBar("Successfully Logged In"),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => LoadHomeScreen(
-                              authToken: token!, userDisplayName: username),
-                        ),
-                      );
-                    } else {
+                    try {
+                      await authProvider.fetchAuthToken();
+                      String? token = authProvider.authToken;
+                      String? username = authProvider.username;
+                      if (!mounted) return;
+                      if (token != null && username != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          showSuccessSnackBar("Successfully Logged In"),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LoadHomeScreen(
+                                authToken: token, userDisplayName: username),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      printIfDebug(e);
                       ScaffoldMessenger.of(context).showSnackBar(
                         showErrorSnackBar("Please Try Again Later."),
                       );

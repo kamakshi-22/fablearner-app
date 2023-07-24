@@ -7,8 +7,8 @@ class AuthProvider with ChangeNotifier {
   String? _authToken;
   String? get authToken => _authToken;
 
-  String _username = '';
-  String get username => _username;
+  String? _username;
+  String? get username => _username;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -34,12 +34,10 @@ class AuthProvider with ChangeNotifier {
         printIfDebug(_authToken);
         notifyListeners();
       } else {
-        // Handle error response
-        printIfDebug("Error: ${response.statusCode} - ${response.body}");
+        throw Exception("Error: ${response.statusCode} - ${response.body}");
       }
     } catch (e) {
-      // Handle exceptions
-      printIfDebug(e);
+      throw Exception(e);
     } finally {
       _isLoading = false;
       notifyListeners();

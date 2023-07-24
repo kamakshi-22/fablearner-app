@@ -11,7 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class SectionsScreen extends StatefulWidget {
-  final CoursesModel course;
+  final CourseModel course;
   const SectionsScreen({super.key, required this.course});
 
   @override

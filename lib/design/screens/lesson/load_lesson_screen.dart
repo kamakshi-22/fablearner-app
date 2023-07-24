@@ -2,6 +2,7 @@ import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/providers/providers.dart';
+import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,9 @@ class LoadLessonScreen extends StatelessWidget {
             return LoadingScreen();
           case ConnectionState.done:
             if (snapshot.hasError) {
-              return ErrorScreen(text: snapshot.error.toString());
+              printIfDebug(snapshot.error);
+              return const ErrorScreen(
+                  text: "Encountered error. Please try again.");
             } else {
               final lessonData = snapshot.data;
               return LessonScreen(

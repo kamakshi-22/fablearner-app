@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/models/finish_lesson_model.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
@@ -12,7 +10,7 @@ class DataProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<List<CoursesModel>> fetchCoursesData(String authToken) async {
+  Future<List<CourseModel>> fetchCoursesData(String authToken) async {
     try {
       final response = await http.get(
         Uri.parse(coursesEnrolledUrl),
@@ -20,14 +18,12 @@ class DataProvider with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         final jsonString = response.body;
-        final coursesModel = coursesModelFromJson(jsonString);
+        final coursesModel = courseModelFromJson(jsonString);
         return coursesModel;
       } else {
-        // Handle error response
         throw Exception('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle exceptions
       throw Exception('Error: $e');
     }
   }
@@ -44,7 +40,6 @@ class DataProvider with ChangeNotifier {
         printIfDebug(lessonModel.name);
         return lessonModel;
       } else {
-        // Handle error response
         throw Exception(
             'Request failed with status: ${response.statusCode}${response.body}');
       }
