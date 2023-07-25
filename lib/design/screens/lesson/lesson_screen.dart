@@ -1,11 +1,13 @@
-import 'package:fablearner_app/design/screens/lesson/load_lesson_screen.dart';
+import 'package:fablearner_app/design/screens/lesson/components/lesson_details.dart';
+import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
+
 import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/providers/auth_provider.dart';
-import 'package:fablearner_app/providers/data_provider.dart';
+import 'package:fablearner_app/providers/data/lesson_provider.dart';
+
+import 'package:fablearner_app/providers/services/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
 import 'package:html/parser.dart' show parse;
 
 import 'package:fablearner_app/design/screens/video/video_screen.dart';
@@ -14,22 +16,20 @@ import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-class LessonScreen extends StatefulWidget {
-  final LessonModel lesson;
+class LessonScreen extends StatelessWidget {
+  //final LessonModel lesson;
   final List<Item> lessonItems;
-  const LessonScreen(
-      {super.key, required this.lesson, required this.lessonItems});
+  const LessonScreen({
+    super.key,
+    //required this.lesson,
+    required this.lessonItems,
+  });
 
-  @override
-  State<LessonScreen> createState() => _LessonScreenState();
-}
-
-class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataProvider>(context);
-    final authProvider = Provider.of<AuthProvider>(context);
-    final token = authProvider.authToken!;
+    final lessonProvider = Provider.of<LessonProvider>(context);
+    final lesson = lessonProvider.lessonModel;
+    final serviceProvider = Provider.of<ServiceProvider>(context);
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -42,14 +42,17 @@ class _LessonScreenState extends State<LessonScreen> {
                 height: AppLayout.getScreenHeight(),
                 child: Stack(
                   children: [
-                    videoHolder(),
-                    playButton(context),
-                    lessonDetails(context, token, dataProvider),
-                    Center(
-                      child: dataProvider.isLoading
-                          ? const AppLoadingIndicator()
-                          : null,
-                    )
+                    videoHolder(lesson),
+                    playButton(context, lesson),
+                    LessonDetails(
+                      lesson: lesson,
+                      lessonItems: lessonItems,
+                    ),
+                    // Center(
+                    //   child: dataProvider.isLoading
+                    //       ? const AppLoadingIndicator()
+                    //       : null,
+                    // )
                   ],
                 ),
               ),
@@ -60,9 +63,9 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Hero videoHolder() {
+  Hero videoHolder(LessonModel lesson) {
     return Hero(
-      tag: widget.lesson.assigned.course.id,
+      tag: lesson.assigned.course.id,
       child: Stack(
         children: [
           Container(
@@ -89,14 +92,14 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Positioned playButton(BuildContext context) {
+  Positioned playButton(BuildContext context, LessonModel lesson) {
     return Positioned(
       top: AppLayout.getScreenHeight() * 0.2,
       left: AppLayout.getScreenWidth() * 0.2,
       right: AppLayout.getScreenWidth() * 0.2,
       child: IconButton(
         onPressed: () {
-          String htmlString = widget.lesson.content;
+          String htmlString = lesson.content;
           String? video;
           try {
             final htmlWithoutComments =
@@ -106,9 +109,8 @@ class _LessonScreenState extends State<LessonScreen> {
             printIfDebug(video);
           } catch (e) {
             printIfDebug("error: $e");
-            ScaffoldMessenger.of(context).showSnackBar(
-              showErrorSnackBar("No Video Found."),
-            );
+            showErrorToast("No Video Found.")
+            ;
           }
 
           if (video != null) {
@@ -118,7 +120,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 builder: (context) {
                   return VideoScreen(
                     videoUrl: video!,
-                    lesson: widget.lesson,
+                    lesson: lesson,
                   );
                 },
               ),
@@ -130,144 +132,6 @@ class _LessonScreenState extends State<LessonScreen> {
           size: 80,
           color: AppColors.successColor,
         ),
-      ),
-    );
-  }
-
-  Container lessonDetails(
-      BuildContext context, String token, DataProvider dataProvider) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(top: AppLayout.getScreenHeight() * 0.4),
-      decoration: BoxDecoration(
-        color: AppColors.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(appCirclularBorderRadius),
-          topRight: Radius.circular(appCirclularBorderRadius),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(appDefaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.lesson.name,
-              style: AppTextStyles.displaySmall,
-            ),
-            Gap(AppLayout.getHeight(appDefaultSpacing)),
-            Row(
-              children: [
-                const Icon(
-                  FontAwesomeIcons.chevronDown,
-                  size: 20,
-                ),
-                Gap(AppLayout.getWidth(8)),
-                Text(
-                  widget.lesson.assigned.course.title,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ],
-            ),
-            Gap(AppLayout.getHeight(appDefaultSpacing)),
-            Text(
-              widget.lesson.assigned.course.content,
-              style: AppTextStyles.bodyMedium,
-            ),
-            Gap(AppLayout.getHeight(appDefaultSpacing)),
-            markFinished(token, dataProvider),
-            if (!widget.lesson.results.status.contains("completed"))
-              Text(
-                "** This can only be marked once! **",
-                style: AppTextStyles.labelSmall
-                    .copyWith(color: AppColors.errorColor),
-              ),
-            const Spacer(),
-            nextLesson(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ElevatedButton markFinished(String token, DataProvider dataProvider) {
-    return ElevatedButton(
-      onPressed: () async {
-        try {
-          if (widget.lesson.results.status.contains("completed") ||
-              dataProvider.isLoading) {
-            return;
-          } else {
-            final response = await dataProvider.finishLesson(
-                widget.lesson.id.toString(), token);
-            if (!mounted) return;
-            if (response.status.contains("error")) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(showErrorSnackBar(response.message));
-            } else {
-              dataProvider.fetchCoursesData(token);
-              dataProvider.fetchLessonData(widget.lesson.id, token);
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(showSuccessSnackBar(response.message));
-            }
-          }
-        } catch (e) {
-          rethrow;
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(appCirclularBorderRadius),
-          ),
-          backgroundColor: widget.lesson.results.status.contains("completed")
-              ? AppColors.accentColor
-              : AppColors.successColor),
-      child: Text(
-        "Mark Finished",
-        style: AppTextStyles.labelLarge,
-      ),
-    );
-  }
-
-  Widget nextLesson(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        try {
-          for (int i = 0; i < widget.lessonItems.length; i++) {
-            if (widget.lessonItems[i].id == widget.lesson.id) {
-              final newLessonId = widget.lessonItems[i + 1].id;
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return LoadLessonScreen(
-                    lessonId: newLessonId, items: widget.lessonItems);
-              }));
-            }
-          }
-        } catch (e) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(showErrorSnackBar("No more lessons found"));
-          rethrow;
-        }
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Row(
-            children: [
-              Text(
-                "Continue to Next Lesson",
-                style: AppTextStyles.labelLarge,
-              ),
-              Gap(AppLayout.getWidth(appDefaultSpacing / 2)),
-              const Icon(
-                FontAwesomeIcons.arrowRight,
-                size: 20,
-              )
-            ],
-          ),
-        ],
       ),
     );
   }

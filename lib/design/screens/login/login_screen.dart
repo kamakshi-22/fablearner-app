@@ -1,21 +1,12 @@
-import 'package:fablearner_app/design/screens/home/load_home_screen.dart';
-import 'package:fablearner_app/design/widgets/widgets.dart';
-import 'package:fablearner_app/providers/providers.dart';
+import 'package:fablearner_app/design/screens/login/login_button.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -26,40 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
             style: AppTextStyles.displayMedium,
           ),
         ),
-        body: Center(
-          child: authProvider.isLoading
-              ? const AppLoadingIndicator()
-              : ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      await authProvider.fetchAuthToken();
-                      String? token = authProvider.authToken;
-                      String? username = authProvider.username;
-                      if (!mounted) return;
-                      if (token != null && username != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          showSuccessSnackBar("Successfully Logged In"),
-                        );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => LoadHomeScreen(
-                                authToken: token, userDisplayName: username),
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      printIfDebug(e);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        showErrorSnackBar("Please Try Again Later."),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Login",
-                    style: AppTextStyles.bodyLarge,
-                  ),
-                ),
+        body: const Center(
+          child: LoginButton(),
         ));
   }
 }

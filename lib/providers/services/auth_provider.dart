@@ -1,19 +1,14 @@
+import 'package:fablearner_app/models/user_model.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthProvider with ChangeNotifier {
-  String? _authToken;
-  String? get authToken => _authToken;
-
-  String? _username;
-  String? get username => _username;
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> fetchAuthToken() async {
+  Future<UserModel> fetchAuthToken() async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -28,11 +23,10 @@ class AuthProvider with ChangeNotifier {
         }),
       );
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        _authToken = data['token'];
-        _username = data['user_display_name'];
-        printIfDebug(_authToken);
-        notifyListeners();
+        final jsonString = response.body;
+        final userModel = userModelFromJson(jsonString);
+        printIfDebug("AUTH_PROVIDER : ${userModel.userDisplayName}");
+        return userModel;
       } else {
         throw Exception("Error: ${response.statusCode} - ${response.body}");
       }

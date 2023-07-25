@@ -1,4 +1,5 @@
 import 'package:fablearner_app/design/screens/login/login_screen.dart';
+import 'package:fablearner_app/providers/data/courses_provider.dart';
 import 'package:fablearner_app/providers/providers.dart';
 import 'package:fablearner_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,10 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => CoursesProvider()),
+        ChangeNotifierProvider(create: (_) => LessonProvider()),
       ],
       child: MaterialApp(
         title: 'Fablearner Reading App',

@@ -9,7 +9,7 @@ class AppLinearProgressIndicator extends StatelessWidget {
     required this.progressPercent,
   });
 
-  final int progressPercent;
+  final dynamic progressPercent;
 
   @override
   Widget build(BuildContext context) {

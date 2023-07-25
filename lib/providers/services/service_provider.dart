@@ -6,10 +6,7 @@ import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class DataProvider with ChangeNotifier {
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
+class ServiceProvider with ChangeNotifier {
   Future<List<CourseModel>> fetchCoursesData(String authToken) async {
     try {
       final response = await http.get(
@@ -19,6 +16,7 @@ class DataProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         final jsonString = response.body;
         final coursesModel = courseModelFromJson(jsonString);
+        printIfDebug(coursesModel[0]);
         return coursesModel;
       } else {
         throw Exception('Request failed with status: ${response.statusCode}');
@@ -48,10 +46,13 @@ class DataProvider with ChangeNotifier {
     }
   }
 
+  //bool _isLoading = false;
+  //bool get isLoading => _isLoading;
+
   Future<FinishLessonModel> finishLesson(
       String lessonId, String authToken) async {
     try {
-      _isLoading = true;
+      //_isLoading = true;
       notifyListeners();
       final response = await http.post(
         Uri.parse(lessonFinishedUrl + lessonId),
@@ -60,7 +61,6 @@ class DataProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         final jsonString = response.body;
         final finishLessonModel = finishLessonModelFromJson(jsonString);
-        notifyListeners();
         return finishLessonModel;
       } else {
         throw Exception(
@@ -69,7 +69,7 @@ class DataProvider with ChangeNotifier {
     } catch (e) {
       rethrow;
     } finally {
-      _isLoading = false;
+      //_isLoading = false;
       notifyListeners();
     }
   }

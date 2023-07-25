@@ -46,6 +46,7 @@ dependencies:
   video_player: ^2.7.0
   chewie: ^1.7.0
   html: ^0.15.4
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

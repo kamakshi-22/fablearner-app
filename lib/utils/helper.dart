@@ -2,6 +2,7 @@ import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 void printIfDebug(text) {
@@ -17,7 +18,31 @@ Text errorText(String text) {
   );
 }
 
-SnackBar showErrorSnackBar(String message) {
+void showSuccessToast(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 4,
+      backgroundColor: AppColors.successColor,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+void showErrorToast(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 4,
+      backgroundColor: AppColors.errorColor,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+
+
+/* SnackBar showErrorSnackBar(String message) {
   return SnackBar(
     content: Column(
       mainAxisSize: MainAxisSize.min,
@@ -65,4 +90,4 @@ SnackBar showSuccessSnackBar(String message) {
     backgroundColor: AppColors.successColor,
     behavior: SnackBarBehavior.floating,
   );
-}
+} */
