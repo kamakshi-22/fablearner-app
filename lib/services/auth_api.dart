@@ -3,15 +3,11 @@ import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+class AuthApi{
 
-class AuthProvider with ChangeNotifier {
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
+  /* Authentication */
   Future<UserModel> fetchAuthToken() async {
     try {
-      _isLoading = true;
-      notifyListeners();
       final response = await http.post(
         Uri.parse(appLoginUrl),
         headers: {
@@ -32,9 +28,7 @@ class AuthProvider with ChangeNotifier {
       }
     } catch (e) {
       throw Exception(e);
-    } finally {
-      _isLoading = false;
-      notifyListeners();
     }
   }
+
 }

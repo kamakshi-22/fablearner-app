@@ -1,4 +1,4 @@
-import 'dart:async';
+/* import 'dart:async';
 
 import 'package:fablearner_app/design/screens/home/home_screen.dart';
 import 'package:fablearner_app/design/widgets/widgets.dart';
@@ -55,3 +55,4 @@ class LoadHomeScreen extends StatelessWidget {
     );
   }
 }
+ */

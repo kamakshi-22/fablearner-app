@@ -23,7 +23,7 @@ void showSuccessToast(String message) {
       msg: message,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 4,
+      timeInSecForIosWeb: 6,
       backgroundColor: AppColors.successColor,
       textColor: Colors.white,
       fontSize: 16.0);
@@ -34,7 +34,7 @@ void showErrorToast(String message) {
       msg: message,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 4,
+      timeInSecForIosWeb: 6,
       backgroundColor: AppColors.errorColor,
       textColor: Colors.white,
       fontSize: 16.0);

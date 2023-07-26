@@ -3,20 +3,18 @@ import 'package:fablearner_app/design/screens/lesson/components/next_lesson.dart
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
-import 'package:fablearner_app/providers/providers.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 
 class LessonDetails extends StatelessWidget {
   final LessonModel lesson;
   final List<Item> lessonItems;
-  const LessonDetails(
-      {super.key,
-      required this.lesson,
-      required this.lessonItems,
+  const LessonDetails({
+    super.key,
+    required this.lesson,
+    required this.lessonItems,
   });
 
   @override

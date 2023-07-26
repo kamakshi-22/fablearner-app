@@ -3,9 +3,7 @@ import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
 
 import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/providers/data/lesson_provider.dart';
-
-import 'package:fablearner_app/providers/services/service_provider.dart';
+import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/parser.dart' show parse;
@@ -17,11 +15,9 @@ import 'package:fablearner_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class LessonScreen extends StatelessWidget {
-  //final LessonModel lesson;
   final List<Item> lessonItems;
   const LessonScreen({
     super.key,
-    //required this.lesson,
     required this.lessonItems,
   });
 
@@ -29,7 +25,6 @@ class LessonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final lessonProvider = Provider.of<LessonProvider>(context);
     final lesson = lessonProvider.lessonModel;
-    final serviceProvider = Provider.of<ServiceProvider>(context);
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,

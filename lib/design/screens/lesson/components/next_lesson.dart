@@ -1,9 +1,11 @@
 import 'package:fablearner_app/design/screens/lesson/components/mark_finished_button.dart';
-import 'package:fablearner_app/design/screens/lesson/load_lesson_screen.dart';
+import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
+import 'package:fablearner_app/discard/load_lesson_screen.dart';
+import 'package:fablearner_app/providers/lesson_provider.dart';
+import 'package:fablearner_app/providers/user_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
-import 'package:fablearner_app/providers/providers.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -21,17 +23,16 @@ class NextLesson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String token = userProvider.user.token;
+    final lessonProvider = Provider.of<LessonProvider>(context);
     return GestureDetector(
       onTap: () {
         try {
           for (int i = 0; i < lessonItems.length; i++) {
             if (lessonItems[i].id == lesson.id) {
               final newLessonId = lessonItems[i + 1].id;
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return LoadLessonScreen(
-                    lessonId: newLessonId, items: lessonItems);
-              }));
+              lessonProvider.fetchLessonModel(newLessonId, token);
             }
           }
         } catch (e) {

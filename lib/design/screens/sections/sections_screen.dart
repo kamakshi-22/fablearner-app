@@ -1,17 +1,10 @@
-import 'package:fablearner_app/design/screens/lesson/load_lesson_screen.dart';
-import 'package:fablearner_app/design/screens/sections/sections_appbar.dart';
-import 'package:fablearner_app/design/screens/sections/sections_body.dart';
-import 'package:fablearner_app/design/widgets/widgets.dart';
-import 'package:fablearner_app/providers/services/auth_provider.dart';
-import 'package:fablearner_app/providers/services/service_provider.dart';
-import 'package:fablearner_app/providers/data/user_provider.dart';
-import 'package:fablearner_app/utils/layout.dart';
+import 'package:fablearner_app/design/screens/sections/components/sections_appbar.dart';
+import 'package:fablearner_app/design/screens/sections/components/sections_body.dart';
+import 'package:fablearner_app/design/screens/sections/components/sections_button.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 
 class SectionsScreen extends StatefulWidget {
   final CourseModel course;
@@ -42,14 +35,9 @@ class _SectionsScreenState extends State<SectionsScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppColors.primaryColor,
-            onPressed: () {
-              if (_tabController!.index < widget.course.sections.length - 1) {
-                _tabController!.index++;
-              }
-            },
-            child: const Icon(FontAwesomeIcons.chevronRight),
+          floatingActionButton: SectionScreenFloatingActionButton(
+            tabController: _tabController!,
+            course: widget.course,
           ),
           backgroundColor: AppColors.primaryColor,
           body: NestedScrollView(
