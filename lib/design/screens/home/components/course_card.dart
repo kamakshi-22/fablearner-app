@@ -25,7 +25,7 @@ class CourseCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: appDefaultPadding),
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(appCirclularBorderRadius),
+          borderRadius: BorderRadius.circular(appCircularBorderRadius),
         ),
         child: Column(
           children: [

@@ -1,9 +1,12 @@
 import 'package:fablearner_app/design/screens/sections/components/progress_header.dart';
 import 'package:fablearner_app/design/screens/sections/components/lesson_item.dart';
+import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
+import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SectionsScreenBody extends StatefulWidget {
   final CourseModel course;
@@ -25,17 +28,18 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
 
     return Padding(
       padding:
-          EdgeInsets.only(top: AppLayout.getHeight(appCirclularBorderRadius)),
+          EdgeInsets.only(top: AppLayout.getHeight(appCircularBorderRadius)),
       child: Container(
         decoration: BoxDecoration(
             color: AppColors.backgroundColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(appCirclularBorderRadius),
-              topRight: Radius.circular(appCirclularBorderRadius),
+              topLeft: Radius.circular(appCircularBorderRadius),
+              topRight: Radius.circular(appCircularBorderRadius),
             )),
         child: TabBarView(
           controller: widget.tabController,
           children: course.sections.map((section) {
+            
             final progressPercent = section.percent;
             final lessons = section.items;
             return Column(
@@ -70,44 +74,4 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
       ),
     );
   }
-/* 
-  List<Widget> buildTabBarView() {
-    List<Widget> list = []; // stores section's items
-    final sections = widget.course.sections;
-    final progressPercent = sections[widget.tabController!.index].percent;
-
-    for (int i = 0; i < sections.length; i++) {
-      final items = sections[i].items; // current section's items
-      List<Widget> sectionItemsList = []; // stores widgets for current item
-      for (int j = 0; j < items.length; j++) {
-        final item = items[j]; // current item
-        sectionItemsList.add(
-            /* LESSON ITEM */
-            LessonItem(
-          item: item,
-          items: items,
-        ));
-      }
-      list.add(Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: appDefaultPadding, vertical: 20.0),
-            child: ProgressHeader(
-              progressPercent: progressPercent,
-              course: widget.course,
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              /* LESSONS LIST */
-              children: sectionItemsList,
-            ),
-          ),
-        ],
-      ));
-    }
-    return list;
-  } */
 }

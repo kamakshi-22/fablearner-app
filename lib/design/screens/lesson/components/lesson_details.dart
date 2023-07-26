@@ -26,8 +26,8 @@ class LessonDetails extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(appCirclularBorderRadius),
-          topRight: Radius.circular(appCirclularBorderRadius),
+          topLeft: Radius.circular(appCircularBorderRadius),
+          topRight: Radius.circular(appCircularBorderRadius),
         ),
       ),
       child: Padding(

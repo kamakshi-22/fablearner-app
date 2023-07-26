@@ -1,6 +1,7 @@
 import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/error_screen.dart';
 import 'package:fablearner_app/design/widgets/loading_Screen.dart';
+import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
@@ -24,14 +25,13 @@ class LessonItem extends StatefulWidget {
 class _LessonItemState extends State<LessonItem> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String token = userProvider.user.token;
+    final lessonProvider = Provider.of<LessonProvider>(context);
     return GestureDetector(
       onTap: () async {
         try {
-          final userProvider =
-              Provider.of<UserProvider>(context, listen: false);
-          final String token = userProvider.user.token;
-          final lessonProvider =
-              Provider.of<LessonProvider>(context, listen: false);
+          showSuccessToast("Loading...");
           await lessonProvider.fetchLessonModel(widget.item.id, token);
           if (mounted) //if widget disposed don't navigate
           {
@@ -80,6 +80,7 @@ class _LessonItemState extends State<LessonItem> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Gap(AppLayout.getWidth(10)),
           ],
         ),
       ),

@@ -20,42 +20,48 @@ class MarkFinishedButton extends StatelessWidget {
     final String token = userProvider.user.token;
 
     final finishLessonProvider = Provider.of<FinishLessonProvider>(context);
-    final lessonProvider  = Provider.of<LessonProvider>(context);
+    final lessonProvider = Provider.of<LessonProvider>(context);
     final courseProvider = Provider.of<CoursesProvider>(context);
 
     return finishLessonProvider.isLoading
         ? AppLoadingIndicator()
-        : ElevatedButton(
-            onPressed: () async {
-              if (finishLessonProvider.isLoading || isCompleted) return;
-              try {
-                await finishLessonProvider.markLessonFinished(lesson.id, token);
-                lessonProvider.fetchLessonModel(lesson.id, token);
-                courseProvider.fetchCourseModel(token);
-                printIfDebug(finishLessonProvider.finishlessonModel.message);
-                final message = finishLessonProvider.finishlessonModel.message;
-                final status = finishLessonProvider.finishlessonModel.status;
+        : Container(
+            padding: EdgeInsets.symmetric(vertical: appDefaultPadding / 2),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (finishLessonProvider.isLoading || isCompleted) return;
+                try {
+                  await finishLessonProvider.markLessonFinished(
+                      lesson.id, token);
+                  lessonProvider.fetchLessonModel(lesson.id, token);
+                  courseProvider.fetchCourseModel(token);
+                  printIfDebug(finishLessonProvider.finishlessonModel.message);
+                  final message =
+                      finishLessonProvider.finishlessonModel.message;
+                  final status = finishLessonProvider.finishlessonModel.status;
 
-                if (status.contains("error")) {
-                  showErrorToast(message);
-                } else {
-                  showSuccessToast(message);
+                  if (status.contains("error")) {
+                    showErrorToast(message);
+                  } else {
+                    showSuccessToast(message);
+                  }
+                } catch (e) {
+                  showErrorToast("Something went wrong");
+                  rethrow;
                 }
-              } catch (e) {
-                showErrorToast("Something went wrong");
-                rethrow;
-              }
-            },
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(appCirclularBorderRadius),
-                ),
-                backgroundColor: isCompleted
-                    ? AppColors.accentColor
-                    : AppColors.successColor),
-            child: Text(
-              "Mark Finished",
-              style: AppTextStyles.labelLarge,
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(appCircularBorderRadius),
+                  ),
+                  backgroundColor: isCompleted
+                      ? AppColors.accentColor
+                      : AppColors.successColor),
+              child: Text(
+                "Mark Finished",
+                style: AppTextStyles.labelLarge,
+              ),
             ),
           );
   }
