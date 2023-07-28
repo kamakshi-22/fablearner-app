@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +26,7 @@ class HeaderCard extends StatelessWidget {
           right: AppLayout.getWidth(-20),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: appDefaultPadding),
-            height: AppLayout.getHeight(160),
+            height: AppLayout.getHeight(180),
             width: AppLayout.getWidth(280),
             child: Transform.flip(
               flipX: true,
@@ -40,13 +38,21 @@ class HeaderCard extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(appDefaultPadding),
+          padding: EdgeInsets.only(
+              left: appDefaultPadding,
+              right: appDefaultPadding * 4,
+              top: appDefaultPadding / 2),
           child: RichText(
             text: TextSpan(
-              text: 'Teach your child to read with ',
+              text: 'Teach your child to  ',
               style: AppTextStyles.displaySmall
                   .copyWith(color: AppColors.primaryColor),
               children: [
+                TextSpan(
+                  text: 'read with ',
+                  style: AppTextStyles.displaySmall
+                      .copyWith(color: AppColors.primaryColor),
+                ),
                 TextSpan(
                   text: 'engaging lessons ',
                   style: AppTextStyles.displaySmall
