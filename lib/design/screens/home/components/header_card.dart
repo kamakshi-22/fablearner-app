@@ -27,7 +27,7 @@ class HeaderCard extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: appDefaultPadding),
             height: AppLayout.getHeight(180),
-            width: AppLayout.getWidth(280),
+            width: AppLayout.getWidth(290),
             child: Transform.flip(
               flipX: true,
               child: Image.asset(

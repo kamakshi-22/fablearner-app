@@ -6,7 +6,7 @@ import 'dart:convert';
 class AuthApi{
 
   /* Authentication */
-  Future<UserModel> fetchAuthToken() async {
+  Future<UserModel> fetchAuthToken(String username, String password) async {
     try {
       final response = await http.post(
         Uri.parse(appLoginUrl),
@@ -14,8 +14,8 @@ class AuthApi{
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'username': appTestUsername1,
-          'password': appTestUserpassword1,
+          'username': username,
+          'password':  password,
         }),
       );
       if (response.statusCode == 200) {

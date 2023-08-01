@@ -31,9 +31,7 @@ class HomeScreenHeader extends StatelessWidget {
           Text(
             "Learn with our best courses!",
             maxLines: 2,
-            style: AppTextStyles.headlineMedium.copyWith(
-              color: AppColors.primaryColor,
-            ),
+            style: AppTextStyles.headlineMedium,
           ),
           Gap(AppLayout.getHeight(10)),
         ],

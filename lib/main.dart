@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LessonProvider()),
         ChangeNotifierProvider(create: (_) => FinishLessonProvider()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Fablearner Reading App',
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),

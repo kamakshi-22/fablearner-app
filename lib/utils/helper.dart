@@ -40,6 +40,18 @@ void showErrorToast(String message) {
       fontSize: 16.0);
 }
 
+Future<dynamic> showLoadingIndicator(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primaryColor,
+            strokeWidth: 6,
+          ),
+        );
+      });
+}
 
 
 /* SnackBar showErrorSnackBar(String message) {

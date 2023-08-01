@@ -11,11 +11,13 @@ class UserProvider with ChangeNotifier {
 
   final AuthApi apiService = AuthApi();
 
-  Future<void> fetchUser() async{
+  Future<void> fetchUser(String username, String password) async{
     try {
       _isLoading=true;
       notifyListeners();
-      _user = await apiService.fetchAuthToken();
+      _user = await apiService.fetchAuthToken(
+ username, password
+      );
        _isLoading=false;
       notifyListeners();
     } catch (e) {

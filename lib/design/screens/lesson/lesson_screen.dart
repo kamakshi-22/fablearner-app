@@ -1,8 +1,6 @@
 import 'package:fablearner_app/design/screens/lesson/components/lesson_details.dart';
-import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
-
-import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
+import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +22,12 @@ class LessonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lessonProvider = Provider.of<LessonProvider>(context);
+    final courseProvider = Provider.of<CoursesProvider>(context);
     final lesson = lessonProvider.lessonModel;
+    final courseId = lesson.assigned.course.id;
+    final course = courseProvider.coursesModel
+        .where((course) => course.id.toString() == courseId)
+        .first;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -37,17 +40,12 @@ class LessonScreen extends StatelessWidget {
                 height: AppLayout.getScreenHeight(),
                 child: Stack(
                   children: [
-                    videoHolder(lesson),
+                    videoHolder(lesson, course),
                     playButton(context, lesson),
                     LessonDetails(
                       lesson: lesson,
                       lessonItems: lessonItems,
                     ),
-                    // Center(
-                    //   child: dataProvider.isLoading
-                    //       ? const AppLoadingIndicator()
-                    //       : null,
-                    // )
                   ],
                 ),
               ),
@@ -58,7 +56,7 @@ class LessonScreen extends StatelessWidget {
     );
   }
 
-  Hero videoHolder(LessonModel lesson) {
+  Hero videoHolder(LessonModel lesson, CourseModel course) {
     return Hero(
       tag: lesson.assigned.course.id,
       child: Stack(
@@ -68,8 +66,8 @@ class LessonScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: AppColors.primaryColor,
             ),
-            child: Image.asset(
-              "assets/images/notebook-3D.png",
+            child: Image.network(
+              course.image,
               fit: BoxFit.cover,
             ),
           ),
@@ -104,8 +102,7 @@ class LessonScreen extends StatelessWidget {
             printIfDebug(video);
           } catch (e) {
             printIfDebug("error: $e");
-            showErrorToast("No Video Found.")
-            ;
+            showErrorToast("No Video Found.");
           }
 
           if (video != null) {

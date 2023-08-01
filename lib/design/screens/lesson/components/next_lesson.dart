@@ -26,13 +26,14 @@ class NextLesson extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           try {
-            showSuccessToast("Loading...");
+            showLoadingIndicator(context);
             for (int i = 0; i < lessonItems.length; i++) {
               if (lessonItems[i].id == lesson.id) {
                 final newLessonId = lessonItems[i + 1].id;
                 lessonProvider.fetchLessonModel(newLessonId, token);
               }
             }
+            Navigator.of(context).pop();
           } catch (e) {
             showErrorToast("No more lessons found");
             rethrow;

@@ -40,7 +40,7 @@ class LessonDetails extends StatelessWidget {
             if (!isCompleted)
               Text(
                 "** This can only be marked once! **",
-                style: AppTextStyles.labelSmall
+                style: AppTextStyles.bodySmall
                     .copyWith(color: AppColors.errorColor),
               ),
             const Spacer(),

@@ -4,6 +4,7 @@ import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 class ProgressHeader extends StatelessWidget {
   final dynamic progressPercent;
   final CourseModel course;
@@ -41,8 +42,8 @@ class ProgressHeader extends StatelessWidget {
               height: appCourseImageSize / 2,
               child: Hero(
                 tag: "${course.id}",
-                child: Image.asset(
-                  "assets/images/notebook-3D.png",
+                child: Image.network(
+                  course.image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -50,8 +51,8 @@ class ProgressHeader extends StatelessWidget {
           ],
         ),
         Gap(AppLayout.getHeight(8)),
-                /* LINEAR PROGRESS INDICATOR */
-                AppLinearProgressIndicator(progressPercent: progressPercent)
+        /* LINEAR PROGRESS INDICATOR */
+        AppLinearProgressIndicator(progressPercent: progressPercent)
       ],
     );
   }

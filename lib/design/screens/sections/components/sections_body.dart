@@ -1,12 +1,9 @@
 import 'package:fablearner_app/design/screens/sections/components/progress_header.dart';
 import 'package:fablearner_app/design/screens/sections/components/lesson_item.dart';
-import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SectionsScreenBody extends StatefulWidget {
   final CourseModel course;
@@ -39,7 +36,6 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
         child: TabBarView(
           controller: widget.tabController,
           children: course.sections.map((section) {
-            
             final progressPercent = section.percent;
             final lessons = section.items;
             return Column(
@@ -57,6 +53,7 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
                 ),
                 Expanded(
                   child: ListView.builder(
+                    key: PageStorageKey<int>(section.id),
                     itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       final item = lessons[index];

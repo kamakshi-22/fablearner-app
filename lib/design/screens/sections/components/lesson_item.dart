@@ -1,7 +1,5 @@
 import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/error_screen.dart';
-import 'package:fablearner_app/design/widgets/loading_Screen.dart';
-import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
@@ -31,10 +29,11 @@ class _LessonItemState extends State<LessonItem> {
     return GestureDetector(
       onTap: () async {
         try {
-          showSuccessToast("Loading...");
+          showLoadingIndicator(context);
           await lessonProvider.fetchLessonModel(widget.item.id, token);
           if (mounted) //if widget disposed don't navigate
           {
+            Navigator.of(context).pop();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return LessonScreen(
                 lessonItems: widget.items,

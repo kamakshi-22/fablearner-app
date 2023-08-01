@@ -1,4 +1,3 @@
-import 'package:fablearner_app/design/widgets/progress_indicator.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/utils/colors.dart';
 import 'package:fablearner_app/utils/constants.dart';
@@ -47,7 +46,12 @@ class _VideoScreenState extends State<VideoScreen> {
         backgroundColor: AppColors.backgroundColor,
         bufferedColor: AppColors.accentColor,
       ),
-      placeholder: const Center(child: AppLoadingIndicator()),
+      placeholder: const Center(
+        child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+          strokeWidth: 6,
+        ),
+      ),
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text("Error loading lesson. Please try again later.",
