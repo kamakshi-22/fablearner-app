@@ -1,3 +1,3 @@
 export 'error_screen.dart';
-export 'linearProgressIndicator.dart';
+export 'linear_progress_indicator.dart';
 

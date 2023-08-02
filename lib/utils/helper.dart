@@ -1,9 +1,7 @@
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gap/gap.dart';
 
 void printIfDebug(text) {
   if (kDebugMode) {
@@ -40,7 +38,7 @@ void showErrorToast(String message) {
       fontSize: 16.0);
 }
 
-Future<dynamic> showLoadingIndicator(BuildContext context) {
+showLoadingIndicator(BuildContext context) {
   return showDialog(
       context: context,
       builder: (context) {

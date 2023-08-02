@@ -37,7 +37,7 @@ class _NavScreenState extends State<NavScreen> {
                   currentIndex = index;
                 });
               },
-              children: [HomeScreen(), QRScan(), NotificationsScreen()],
+              children: const [HomeScreen(), QRScan(), NotificationsScreen()],
             ),
             Positioned(
               bottom: 10,

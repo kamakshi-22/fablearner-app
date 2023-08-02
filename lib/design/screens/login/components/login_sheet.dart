@@ -1,10 +1,8 @@
-import 'package:fablearner_app/design/screens/home/home_screen.dart';
 import 'package:fablearner_app/design/screens/nav/nav_screen.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:fablearner_app/design/widgets/widgets.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -153,38 +151,37 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
     );
   }
 
-  void handleLogin() {
-    showLoadingIndicator(context);
-    printIfDebug(usernameController.text);
-    printIfDebug(passwordController.text);
-    final isValid = formKey.currentState!.validate();
-    if (isValid) {
-      final username = usernameController.text;
-      final password = passwordController.text;
-
-      handleUserLoginApi(username, password);
-    }
-    Navigator.of(context).pop();
-  }
-
-  void handleUserLoginApi(String username, String password) async {
+  void handleLogin() async {
     try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      await userProvider.fetchUser(username, password);
-      if (mounted) {
-        //if widget disposed don't proceed
+      showLoadingIndicator(context);
+      final isValid = formKey.currentState!.validate();
+      if (isValid) {
+        final username = usernameController.text;
+        final password = passwordController.text;
 
-        final coursesProvider =
-            Provider.of<CoursesProvider>(context, listen: false);
-        await coursesProvider.fetchCourseModel(userProvider.user.token);
-        if (mounted) //if widget disposed don't navigate
-        {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return NavScreen();
-          }));
+        if (mounted) {
+          //if widget disposed don't proceed
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          final coursesProvider =
+              Provider.of<CoursesProvider>(context, listen: false);
+
+          await userProvider.fetchUser(username, password);
+
+          // Use the user token to fetch course model
+          await coursesProvider.fetchCourseModel(userProvider.user.token);
+
+          if (mounted) //if widget disposed don't navigate
+          {
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const NavScreen();
+            }));
+          }
         }
       }
     } catch (e) {
+      Navigator.of(context).pop();
       showErrorToast("Incorrect username or password. Please try again.");
       rethrow;
     }

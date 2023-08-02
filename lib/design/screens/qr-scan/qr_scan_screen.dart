@@ -7,7 +7,7 @@ class QRScan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("QR Scan"),
+        title: const Text("QR Scan"),
       ),
     );
   }

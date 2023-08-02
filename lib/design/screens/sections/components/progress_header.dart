@@ -1,4 +1,4 @@
-import 'package:fablearner_app/design/widgets/linearProgressIndicator.dart';
+import 'package:fablearner_app/design/widgets/linear_progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
