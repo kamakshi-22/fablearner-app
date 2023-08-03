@@ -18,8 +18,7 @@ class LoginScreen extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'https://images.unsplash.com/photo-1546521343-4eb2c01aa44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTgwOTN8MHwxfHNlYXJjaHw0MHx8Ym9va3N8ZW58MHx8fHwxNjkwODY5NzQ0fDA&ixlib=rb-4.0.3&q=80&w=1080'),
+                  image: AssetImage('assets/images/background.jpeg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -31,7 +30,6 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: appDefaultPadding * 4),
               height: AppLayout.getScreenHeight() * 0.5,
               width: AppLayout.getScreenWidth(),
-              //color: Colors.red,
               child: Column(
                 children: [
                   Text(
@@ -49,7 +47,6 @@ class LoginScreen extends StatelessWidget {
                     AppLayout.getHeight(appDefaultPadding * 2),
                   ),
                   const LoginButton(),
-                  
                 ],
               ),
             ),

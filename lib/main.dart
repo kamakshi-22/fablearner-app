@@ -1,5 +1,6 @@
 import 'package:fablearner_app/design/screens/login/login_screen.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
+import 'package:fablearner_app/providers/drawer_state_provider.dart';
 import 'package:fablearner_app/providers/finish_lesson_provider.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CoursesProvider()),
         ChangeNotifierProvider(create: (_) => LessonProvider()),
         ChangeNotifierProvider(create: (_) => FinishLessonProvider()),
+        ChangeNotifierProvider(create: (_) => DrawerStateProvider()),
       ],
       child: const MaterialApp(
         title: 'Fablearner Reading App',

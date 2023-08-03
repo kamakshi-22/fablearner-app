@@ -1,6 +1,7 @@
 import 'package:fablearner_app/design/screens/home/home_screen.dart';
 import 'package:fablearner_app/design/screens/login/components/login_sheet.dart';
 import 'package:fablearner_app/design/screens/nav/nav_screen.dart';
+import 'package:fablearner_app/design/widgets/action_button.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
@@ -42,21 +43,12 @@ class _LoginButtonState extends State<LoginButton> {
     return SizedBox(
       height: AppLayout.getHeight(appDefaultSpacing * 2),
       width: AppLayout.getScreenWidth() * 0.8,
-      child: ElevatedButton(
+      child: ActionButton(
         onPressed: _showLoginBottomSheet,
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(appCircularBorderRadius),
-            ),
-            backgroundColor: AppColors.primaryColor),
-        child: Text(
-          "Login".toUpperCase(),
-          style: AppTextStyles.bodyLarge.copyWith(
-              color: AppColors.backgroundColor,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2),
-        ),
-      ),
+        text: "Login",
+      )
+      
+      
     );
   }
 }

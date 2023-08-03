@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class LoginBottomSheet extends StatefulWidget {
@@ -174,9 +175,14 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
           if (mounted) //if widget disposed don't navigate
           {
             Navigator.of(context).pop();
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const NavScreen();
-            }));
+            Navigator.push(
+              context,
+              PageTransition(
+                child: NavScreen(),
+                type: PageTransitionType.fade,
+                duration: const Duration(seconds: 2),
+              ),
+            );
           }
         }
       }
