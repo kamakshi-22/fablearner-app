@@ -1,3 +1,4 @@
+import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
 import 'package:fablearner_app/design/widgets/error_screen.dart';
 import 'package:fablearner_app/models/courses_model.dart';
@@ -24,7 +25,10 @@ class _LessonItemState extends State<LessonItem> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String token = userProvider.user.token;
+
+    final String token =
+        UserPreferences.getUserToken() ?? userProvider.user.token;
+
     final lessonProvider = Provider.of<LessonProvider>(context);
     return GestureDetector(
       onTap: () async {

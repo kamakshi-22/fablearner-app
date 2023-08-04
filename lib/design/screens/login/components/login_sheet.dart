@@ -1,3 +1,4 @@
+import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/design/screens/nav/nav_screen.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
@@ -157,20 +158,28 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
       showLoadingIndicator(context);
       final isValid = formKey.currentState!.validate();
       if (isValid) {
+        // Save Username and password variables
         final username = usernameController.text;
         final password = passwordController.text;
 
+        // Proceed if widget is not disposed
         if (mounted) {
-          //if widget disposed don't proceed
+          // Fetch providers needed
           final userProvider =
               Provider.of<UserProvider>(context, listen: false);
           final coursesProvider =
               Provider.of<CoursesProvider>(context, listen: false);
 
+          // Get user details
           await userProvider.fetchUser(username, password);
 
           // Use the user token to fetch course model
           await coursesProvider.fetchCourseModel(userProvider.user.token);
+
+          // Save the user details to UserPreferences
+          UserPreferences.setUserToken(userProvider.user.token);
+          UserPreferences.setUserDisplayName(userProvider.user.userDisplayName);
+          UserPreferences.setUserEmail(userProvider.user.userEmail);
 
           if (mounted) //if widget disposed don't navigate
           {

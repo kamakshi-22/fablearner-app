@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/design/screens/login/login_screen.dart';
 import 'package:fablearner_app/design/widgets/action_button.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
@@ -7,7 +8,8 @@ import 'package:fablearner_app/providers/user_provider.dart';
 import 'package:fablearner_app/utils/colors.dart';
 import 'package:fablearner_app/utils/constants.dart';
 import 'package:fablearner_app/utils/helper.dart';
-import 'package:fablearner_app/utils/text_styles.dart';
+import 'package:fablearner_app/utils/textstyles.dart';
+import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -53,6 +55,7 @@ class HomeScreenDrawer extends StatelessWidget {
                     width: double.infinity,
                     child: ActionButton(
                       onPressed: () {
+                        UserPreferences.clearUserDetails();
                         Navigator.pushAndRemoveUntil(
                           context,
                           PageTransition(
@@ -78,7 +81,8 @@ class HomeScreenDrawer extends StatelessWidget {
   }
 
   Widget buildHeader(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    String? userDisplayName = UserPreferences.getUserDisplayName();
+    String? userEmail = UserPreferences.getUserEmail();
     return Container(
       height: 180,
       width: double.infinity,
@@ -117,7 +121,7 @@ class HomeScreenDrawer extends StatelessWidget {
           ),
           Gap(appDefaultPadding / 2),
           Text(
-            userProvider.user.userDisplayName,
+            userDisplayName!,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
@@ -127,7 +131,7 @@ class HomeScreenDrawer extends StatelessWidget {
           ),
           Gap(appDefaultPadding / 4),
           Text(
-            userProvider.user.userEmail,
+            userEmail!,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.labelMedium.copyWith(
               color: AppColors.textColor,

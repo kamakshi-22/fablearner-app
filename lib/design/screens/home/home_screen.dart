@@ -4,7 +4,6 @@ import 'package:fablearner_app/design/screens/home/components/course_card.dart';
 import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
-import 'package:fablearner_app/providers/user_provider.dart';
 
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverAppBar(
               leading: IconButton(
                 onPressed: () {
-                   Provider.of<DrawerStateProvider>(context, listen: false).setDrawerState(true);
-              
+                  Provider.of<DrawerStateProvider>(context, listen: false)
+                      .setDrawerState(true);
+
                   openDrawer();
                 },
                 icon: const Icon(
@@ -60,12 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(
-              child: SingleChildScrollView(child: Consumer<UserProvider>(
-                builder: (context, userProvider, child) {
-                  final username = userProvider.user.userDisplayName;
-                  return HomeScreenHeader(username: username);
-                },
-              )),
+              child: SingleChildScrollView(child: HomeScreenHeader()),
             ),
             SliverPadding(
                 padding: EdgeInsets.only(
@@ -76,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 sliver: Consumer<CoursesProvider>(
                   builder: (context, coursesProvider, child) {
                     final courses = coursesProvider.coursesModel;
+                    print(courses.length);
                     // final filteredCourses = courses
                     //     .where((course) => !course.name.contains("Month"))
                     //     .toList();

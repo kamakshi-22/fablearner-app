@@ -1,3 +1,4 @@
+import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/finish_lesson_provider.dart';
@@ -28,7 +29,7 @@ class _MarkFinishedButtonState extends State<MarkFinishedButton> {
     bool isCompleted = widget.lesson.results.status.contains("completed");
 
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String token = userProvider.user.token;
+    final String token = UserPreferences.getUserToken() ??userProvider.user.token;
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: appDefaultPadding / 2),

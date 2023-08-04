@@ -3,10 +3,10 @@ import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-class AuthApi{
 
-  /* Authentication */
-  Future<UserModel> fetchAuthToken(String username, String password) async {
+class AuthApi {
+  /* Login User */
+  Future<UserModel> fetchUser(String username, String password) async {
     try {
       final response = await http.post(
         Uri.parse(appLoginUrl),
@@ -15,7 +15,7 @@ class AuthApi{
         },
         body: json.encode({
           'username': username,
-          'password':  password,
+          'password': password,
         }),
       );
       if (response.statusCode == 200) {
@@ -31,4 +31,23 @@ class AuthApi{
     }
   }
 
+  /* Validate Token */
+  Future<bool> validateAuthToken(String authToken) async {
+    try {
+      final response = await http.post(
+        Uri.parse(validateTokenUrl),
+        headers: {'Authorization': 'Bearer $authToken'},
+      );
+      if (response.statusCode == 200) {
+        //final jsonData = json.decode(response.body);
+        return true;
+      } else {
+        printIfDebug("Error: ${response.statusCode} - ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      printIfDebug("Exception occurred: $e");
+      return false;
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
 import 'package:fablearner_app/utils/layout.dart';
@@ -21,7 +22,7 @@ class NextLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String token = userProvider.user.token;
+    final String token = UserPreferences.getUserToken() ??userProvider.user.token;
     final lessonProvider = Provider.of<LessonProvider>(context);
     return GestureDetector(
         onTap: () {
