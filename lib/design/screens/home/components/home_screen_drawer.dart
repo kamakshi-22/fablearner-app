@@ -15,9 +15,31 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
   const HomeScreenDrawer({super.key});
+
+  void _handleLogout(BuildContext context) {
+    UserPreferences.clearUserDetails();
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageTransition(
+        child: LoginScreen(),
+        type: PageTransitionType.fade,
+        duration: const Duration(seconds: 2),
+      ),
+      (route) => false,
+    );
+    Provider.of<DrawerStateProvider>(context, listen: false)
+        .setDrawerState(false);
+  }
+
+  void _handleTapMenuItem(BuildContext context, Uri websiteUri) {
+    launchUrl(websiteUri, mode: LaunchMode.inAppWebView);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,20 +76,7 @@ class HomeScreenDrawer extends StatelessWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: ActionButton(
-                      onPressed: () {
-                        UserPreferences.clearUserDetails();
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          PageTransition(
-                            child: LoginScreen(),
-                            type: PageTransitionType.fade,
-                            duration: const Duration(seconds: 2),
-                          ),
-                          (route) => false,
-                        );
-                        Provider.of<DrawerStateProvider>(context, listen: false)
-                            .setDrawerState(false);
-                      },
+                      onPressed: () => _handleLogout(context),
                       text: "Logout",
                     ),
                   ),
@@ -151,13 +160,14 @@ class HomeScreenDrawer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            labelItem('Weekly Meetings'),
-            labelItem('Help Desk'),
+            labelItem('Weekly Meetings', context, meetingsUrl),
+            labelItem('Help Desk', context, helpDeskUrl),
           ],
         ));
   }
 
-  Widget labelItem(String text) {
+  Widget labelItem(String text, BuildContext context, String url) {
+    final websiteUri = Uri.parse(url);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -173,7 +183,9 @@ class HomeScreenDrawer extends StatelessWidget {
           Gap(appDefaultPadding),
           InkWell(
             onTap: () {
-              printIfDebug("$text is Tapped");
+              Provider.of<DrawerStateProvider>(context, listen: false)
+                  .setDrawerState(false);
+              _handleTapMenuItem(context, websiteUri);
             },
             child: Text(
               text,

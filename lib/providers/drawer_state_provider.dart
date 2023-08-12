@@ -7,7 +7,7 @@ class DrawerStateProvider extends ChangeNotifier {
 
   void setDrawerState(bool isOpen) {
     _isDrawerOpen = isOpen;
-    printIfDebug("DrawerStateProvider: drawer is $_isDrawerOpen");
+    printIfDebug("DrawerStateProvider: drawer is open => $_isDrawerOpen");
     notifyListeners();
   }
 }

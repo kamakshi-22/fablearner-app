@@ -41,7 +41,7 @@ class _MarkFinishedButtonState extends State<MarkFinishedButton> {
             await finishLessonProvider.markLessonFinished(
                 widget.lesson.id, token);
             lessonProvider.fetchLessonModel(widget.lesson.id, token);
-            courseProvider.fetchCourseModel(token);
+            courseProvider.updateCourseModel(token);
             printIfDebug(finishLessonProvider.finishlessonModel.message);
             final message = finishLessonProvider.finishlessonModel.message;
             final status = finishLessonProvider.finishlessonModel.status;

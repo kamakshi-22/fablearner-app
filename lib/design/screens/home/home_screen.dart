@@ -71,10 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 sliver: Consumer<CoursesProvider>(
                   builder: (context, coursesProvider, child) {
                     final courses = coursesProvider.coursesModel;
-                    print(courses.length);
-                    // final filteredCourses = courses
-                    //     .where((course) => !course.name.contains("Month"))
-                    //     .toList();
                     return SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisExtent: 200,
@@ -90,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             course: course,
                             onTap: () {
                               try {
-                                printIfDebug(course.sections[0].title);
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
                                   return Consumer<CoursesProvider>(

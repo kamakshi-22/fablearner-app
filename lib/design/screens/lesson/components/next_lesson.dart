@@ -1,7 +1,6 @@
 import 'package:fablearner_app/data/user_preferences.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/utils/utils.dart';
@@ -22,22 +21,25 @@ class NextLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String token = UserPreferences.getUserToken() ??userProvider.user.token;
+    final String token =
+        UserPreferences.getUserToken() ?? userProvider.user.token;
     final lessonProvider = Provider.of<LessonProvider>(context);
     return GestureDetector(
-        onTap: () {
+        onTap: () async {
           try {
             showLoadingIndicator(context);
             for (int i = 0; i < lessonItems.length; i++) {
               if (lessonItems[i].id == lesson.id) {
                 final newLessonId = lessonItems[i + 1].id;
-                lessonProvider.fetchLessonModel(newLessonId, token);
+                await lessonProvider.fetchLessonModel(newLessonId, token);
               }
             }
-            Navigator.of(context).pop();
           } catch (e) {
             showErrorToast("No more lessons found");
             rethrow;
+          } finally {
+            await Future.delayed(const Duration(milliseconds: 300));
+            Navigator.of(context).pop();
           }
         },
         child: Align(
