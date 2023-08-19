@@ -8,8 +8,8 @@ import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MarkFinishedButton extends StatefulWidget {
-  const MarkFinishedButton({
+class LessonFinishButton extends StatefulWidget {
+  const LessonFinishButton({
     super.key,
     required this.lesson,
   });
@@ -17,10 +17,10 @@ class MarkFinishedButton extends StatefulWidget {
   final LessonModel lesson;
 
   @override
-  State<MarkFinishedButton> createState() => _MarkFinishedButtonState();
+  State<LessonFinishButton> createState() => LessonkFinisdButtonState();
 }
 
-class _MarkFinishedButtonState extends State<MarkFinishedButton> {
+class LessonkFinisdButtonState extends State<LessonFinishButton> {
   @override
   Widget build(BuildContext context) {
     final finishLessonProvider = Provider.of<FinishLessonProvider>(context);

@@ -1,6 +1,5 @@
 import 'package:fablearner_app/data/user_preferences.dart';
-import 'package:fablearner_app/design/screens/home/components/header_card.dart';
-import 'package:fablearner_app/utils/layout.dart';
+import 'package:fablearner_app/design/screens/home_screen/home_header_card.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -27,7 +26,7 @@ class HomeScreenHeader extends StatelessWidget {
           ),
           Text(userDisplayName!, style: AppTextStyles.headlineMedium),
           Gap(AppLayout.getHeight(appDefaultSpacing)),
-          const HeaderCard(),
+          const HomeHeaderCard(),
           Gap(AppLayout.getHeight(appDefaultSpacing * 2)),
           Text(
             "Learn with our best courses!",

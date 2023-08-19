@@ -1,21 +1,15 @@
 import 'dart:math';
 
 import 'package:fablearner_app/data/user_preferences.dart';
-import 'package:fablearner_app/design/screens/login/login_screen.dart';
+import 'package:fablearner_app/design/screens/login_screen/login_screen.dart';
 import 'package:fablearner_app/design/widgets/action_button.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
-import 'package:fablearner_app/providers/user_provider.dart';
-import 'package:fablearner_app/utils/colors.dart';
-import 'package:fablearner_app/utils/constants.dart';
-import 'package:fablearner_app/utils/helper.dart';
-import 'package:fablearner_app/utils/textstyles.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
@@ -26,7 +20,7 @@ class HomeScreenDrawer extends StatelessWidget {
     Navigator.pushAndRemoveUntil(
       context,
       PageTransition(
-        child: LoginScreen(),
+        child: const LoginScreen(),
         type: PageTransitionType.fade,
         duration: const Duration(seconds: 2),
       ),

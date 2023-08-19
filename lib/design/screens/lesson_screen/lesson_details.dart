@@ -1,6 +1,5 @@
-import 'package:fablearner_app/design/screens/lesson/components/mark_finished_button.dart';
-import 'package:fablearner_app/design/screens/lesson/components/next_lesson.dart';
-import 'package:fablearner_app/utils/layout.dart';
+import 'package:fablearner_app/design/screens/lesson_screen/lesson_finish_button.dart';
+import 'package:fablearner_app/design/screens/lesson_screen/lesson_change_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/utils/utils.dart';
@@ -36,7 +35,7 @@ class LessonDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildLessonDetails(),
-            MarkFinishedButton(lesson: lesson),
+            LessonFinishButton(lesson: lesson),
             if (!isCompleted)
               Text(
                 "** This can only be marked once! **",
@@ -44,7 +43,7 @@ class LessonDetails extends StatelessWidget {
                     .copyWith(color: AppColors.errorColor),
               ),
             const Spacer(),
-            NextLesson(
+            LessonChangeButton(
               lesson: lesson,
               lessonItems: lessonItems,
             ),

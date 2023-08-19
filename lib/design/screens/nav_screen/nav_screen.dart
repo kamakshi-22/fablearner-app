@@ -1,11 +1,7 @@
-import 'package:fablearner_app/design/notifications/notifications_screen.dart';
-import 'package:fablearner_app/design/screens/home/home_screen.dart';
+import 'package:fablearner_app/design/screens/notifications_screen/notifications_screen.dart';
+import 'package:fablearner_app/design/screens/home_screen/home_screen.dart';
 import 'package:fablearner_app/design/screens/qr-scan/qr_scan_screen.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
-import 'package:fablearner_app/utils/colors.dart';
-import 'package:fablearner_app/utils/constants.dart';
-import 'package:fablearner_app/utils/helper.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,11 +38,11 @@ class _NavScreenState extends State<NavScreen> {
                   currentIndex = index;
                 });
               },
-              children: [
+              children: const [
                 HomeScreen(),
                 QRScan(),
                 NotificationsScreen(),
-              ],
+              ]
             ),
             Consumer<DrawerStateProvider>(
                 builder: (context, drawerProvider, child) {

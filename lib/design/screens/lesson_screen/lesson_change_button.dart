@@ -9,15 +9,20 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 
-class NextLesson extends StatelessWidget {
+class LessonChangeButton extends StatefulWidget {
   final LessonModel lesson;
   final List<Item> lessonItems;
-  const NextLesson({
+  const LessonChangeButton({
     super.key,
     required this.lesson,
     required this.lessonItems,
   });
 
+  @override
+  State<LessonChangeButton> createState() => _LessonChangeButtonState();
+}
+
+class _LessonChangeButtonState extends State<LessonChangeButton> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -28,9 +33,9 @@ class NextLesson extends StatelessWidget {
         onTap: () async {
           try {
             showLoadingIndicator(context);
-            for (int i = 0; i < lessonItems.length; i++) {
-              if (lessonItems[i].id == lesson.id) {
-                final newLessonId = lessonItems[i + 1].id;
+            for (int i = 0; i < widget.lessonItems.length; i++) {
+              if (widget.lessonItems[i].id == widget.lesson.id) {
+                final newLessonId = widget.lessonItems[i + 1].id;
                 await lessonProvider.fetchLessonModel(newLessonId, token);
               }
             }
@@ -39,7 +44,10 @@ class NextLesson extends StatelessWidget {
             rethrow;
           } finally {
             await Future.delayed(const Duration(milliseconds: 300));
-            Navigator.of(context).pop();
+            if(mounted){
+              Navigator.of(context).pop();
+            }
+            
           }
         },
         child: Align(

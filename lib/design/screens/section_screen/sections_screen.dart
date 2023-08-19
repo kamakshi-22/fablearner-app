@@ -1,10 +1,9 @@
-import 'package:fablearner_app/design/screens/sections/components/sections_appbar.dart';
-import 'package:fablearner_app/design/screens/sections/components/sections_body.dart';
-import 'package:fablearner_app/design/screens/sections/components/sections_button.dart';
+import 'package:fablearner_app/design/screens/section_screen/sections_appbar.dart';
+import 'package:fablearner_app/design/screens/section_screen/sections_body.dart';
+import 'package:fablearner_app/design/screens/section_screen/sections_button.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SectionsScreen extends StatefulWidget {
   final CourseModel course;

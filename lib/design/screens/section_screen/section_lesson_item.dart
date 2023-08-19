@@ -1,27 +1,24 @@
 import 'package:fablearner_app/data/user_preferences.dart';
-import 'package:fablearner_app/design/screens/lesson/lesson_screen.dart';
-import 'package:fablearner_app/design/widgets/error_screen.dart';
+import 'package:fablearner_app/design/screens/lesson_screen/lesson_screen.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:fablearner_app/providers/user_provider.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class LessonItem extends StatefulWidget {
+class SectionLessonItem extends StatefulWidget {
   final Item item;
   final List<Item> items;
-  const LessonItem({super.key, required this.item, required this.items});
+  const SectionLessonItem({super.key, required this.item, required this.items});
 
   @override
-  State<LessonItem> createState() => _LessonItemState();
+  State<SectionLessonItem> createState() => Section_LessonItemState();
 }
 
-class _LessonItemState extends State<LessonItem> {
+class Section_LessonItemState extends State<SectionLessonItem> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -90,46 +87,3 @@ class _LessonItemState extends State<LessonItem> {
     );
   }
 }
-
-
-/* Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return Consumer<LessonProvider>(
-                  builder: (context, lessonProvider, child) {
-                    final userProvider =
-                        Provider.of<UserProvider>(context, listen: false);
-                    final String token = userProvider.user.token;
-                    return FutureBuilder(
-                      future: lessonProvider.fetchLessonModel(widget.item.id, token),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return const LoadingScreen();
-                          case ConnectionState.active:
-                          case ConnectionState.waiting:
-                            return const LoadingScreen();
-                          case ConnectionState.done:
-                            if (snapshot.hasError) {
-                              printIfDebug(snapshot.error);
-                              return const ErrorScreen(
-                                  text: "Encountered error. Please try again.");
-                            } else {
-
-                              
-                              return LessonScreen(
-                                lessonItems: widget.items,
-                              );
-                            }
-                          default:
-                            return const ErrorScreen(
-                                text: 'Unknown connection state');
-                        }
-                      },
-                    );
-                  },
-                );
-              },
-            ),
-          ); */

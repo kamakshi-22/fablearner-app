@@ -1,14 +1,13 @@
 import 'package:fablearner_app/design/widgets/linear_progress_indicator.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class ProgressHeader extends StatelessWidget {
+class SectionProgressHeader extends StatelessWidget {
   final dynamic progressPercent;
   final CourseModel course;
-  const ProgressHeader({
+  const SectionProgressHeader({
     super.key,
     required this.progressPercent,
     required this.course,

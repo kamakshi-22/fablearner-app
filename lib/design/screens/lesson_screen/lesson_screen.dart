@@ -1,4 +1,4 @@
-import 'package:fablearner_app/design/screens/lesson/components/lesson_details.dart';
+import 'package:fablearner_app/design/screens/lesson_screen/lesson_details.dart';
 import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/parser.dart' show parse;
 
-import 'package:fablearner_app/design/screens/video/video_screen.dart';
+import 'package:fablearner_app/design/screens/video_screen/video_screen.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 

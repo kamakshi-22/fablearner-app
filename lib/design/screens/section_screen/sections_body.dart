@@ -1,7 +1,6 @@
-import 'package:fablearner_app/design/screens/sections/components/progress_header.dart';
-import 'package:fablearner_app/design/screens/sections/components/lesson_item.dart';
+import 'package:fablearner_app/design/screens/section_screen/section_lesson_item.dart';
+import 'package:fablearner_app/design/screens/section_screen/section_progress_header.dart';
 import 'package:fablearner_app/models/courses_model.dart';
-import 'package:fablearner_app/utils/layout.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +45,7 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
                     horizontal: appDefaultPadding,
                     vertical: 20.0,
                   ),
-                  child: ProgressHeader(
+                  child: SectionProgressHeader(
                     progressPercent: progressPercent,
                     course: course,
                   ),
@@ -57,7 +56,7 @@ class _SectionsScreenBodyState extends State<SectionsScreenBody> {
                     itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       final item = lessons[index];
-                      return LessonItem(
+                      return SectionLessonItem(
                         item: item,
                         items: lessons,
                       );

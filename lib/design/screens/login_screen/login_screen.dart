@@ -1,5 +1,4 @@
-import 'package:fablearner_app/design/screens/login/components/login_button.dart';
-import 'package:fablearner_app/utils/layout.dart';
+import 'package:fablearner_app/design/screens/login_screen/login_button.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

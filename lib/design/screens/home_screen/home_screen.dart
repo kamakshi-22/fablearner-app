@@ -1,7 +1,7 @@
-import 'package:fablearner_app/design/screens/home/components/home_screen_drawer.dart';
-import 'package:fablearner_app/design/screens/home/components/home_screen_header.dart';
-import 'package:fablearner_app/design/screens/home/components/course_card.dart';
-import 'package:fablearner_app/design/screens/sections/sections_screen.dart';
+import 'package:fablearner_app/design/screens/home_screen/home_screen_drawer.dart';
+import 'package:fablearner_app/design/screens/home_screen/home_screen_header.dart';
+import 'package:fablearner_app/design/screens/home_screen/home_course_card.dart';
+import 'package:fablearner_app/design/screens/section_screen/sections_screen.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
 
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: _homeScreenKey,
-        drawer: HomeScreenDrawer(),
+        drawer: const HomeScreenDrawer(),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         childCount: courses.length,
                         (context, index) {
                           final course = courses[index];
-                          return CourseCard(
+                          return HomeCourseCard(
                             course: course,
                             onTap: () {
                               try {

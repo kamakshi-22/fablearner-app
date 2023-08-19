@@ -2,7 +2,7 @@ import 'package:fablearner_app/models/courses_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../utils/utils.dart';
+import '../../../utils/utils.dart';
 
 class SectionsAppBar extends StatelessWidget {
   final CourseModel course;

@@ -1,12 +1,7 @@
 import 'package:fablearner_app/models/lesson_model.dart';
-import 'package:fablearner_app/utils/colors.dart';
-import 'package:fablearner_app/utils/constants.dart';
-import 'package:fablearner_app/utils/layout.dart';
-import 'package:fablearner_app/utils/textstyles.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:video_player/video_player.dart';

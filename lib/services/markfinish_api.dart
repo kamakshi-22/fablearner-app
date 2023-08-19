@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:fablearner_app/models/courses_model.dart';
 import 'package:fablearner_app/models/finish_lesson_model.dart';
-import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/utils/utils.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class MarkFinishApi{
