@@ -1,3 +1,4 @@
+import 'package:fablearner_app/design/screens/qr_scan_screen/qr_scan_screen.dart';
 import 'package:fablearner_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -53,6 +54,54 @@ class BuildEntryScreen extends StatelessWidget {
 
     if (userToken != null) {
       return FutureBuilder(
+        future: Provider.of<UserProvider>(context, listen: false)
+            .validateAuthToken(userToken),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: LoadingScreen());
+          } else if (snapshot.hasError) {
+            printIfDebug(snapshot.error);
+            return const LoginScreen();
+          } else {
+            bool isValidToken = snapshot.data as bool;
+            if (isValidToken) {
+              return FutureBuilder(
+                future: Provider.of<CoursesProvider>(context, listen: false)
+                    .fetchCourseModel(userToken),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: LoadingScreen());
+                  } else if (snapshot.hasError) {
+                    printIfDebug(snapshot.error);
+                    return const LoginScreen();
+                  } else {
+                    return const NavScreen();
+                  }
+                },
+              );
+            } else {
+              return const LoginScreen();
+            }
+          }
+        },
+      );
+    } else {
+      return const LoginScreen();
+    }
+  }
+}
+
+
+/* class BuildEntryScreen extends StatelessWidget {
+  const BuildEntryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final String? userToken = UserPreferences.getUserToken();
+    //return QRScanScreen();
+
+    if (userToken != null) {
+      return FutureBuilder(
         future: Provider.of<CoursesProvider>(context, listen: false)
             .fetchCourseModel(userToken),
         builder: (context, snapshot) {
@@ -74,3 +123,4 @@ class BuildEntryScreen extends StatelessWidget {
     }
   }
 }
+ */

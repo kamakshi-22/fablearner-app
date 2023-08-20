@@ -1,6 +1,6 @@
 import 'package:fablearner_app/design/screens/notifications_screen/notifications_screen.dart';
 import 'package:fablearner_app/design/screens/home_screen/home_screen.dart';
-import 'package:fablearner_app/design/screens/qr-scan/qr_scan_screen.dart';
+import 'package:fablearner_app/design/screens/qr_scan_screen/qr_scan_screen.dart';
 import 'package:fablearner_app/providers/drawer_state_provider.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +40,7 @@ class _NavScreenState extends State<NavScreen> {
               },
               children: const [
                 HomeScreen(),
-                QRScan(),
+                QRScanScreen(),
                 NotificationsScreen(),
               ]
             ),

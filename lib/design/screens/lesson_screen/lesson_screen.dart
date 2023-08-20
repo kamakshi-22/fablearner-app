@@ -1,32 +1,22 @@
 import 'package:fablearner_app/design/screens/lesson_screen/lesson_details.dart';
-import 'package:fablearner_app/models/courses_model.dart';
+import 'package:fablearner_app/design/screens/lesson_screen/lesson_play_button.dart';
+import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/providers/courses_provider.dart';
 import 'package:fablearner_app/providers/lesson_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:html/parser.dart' show parse;
-
-import 'package:fablearner_app/design/screens/video_screen/video_screen.dart';
-import 'package:fablearner_app/models/lesson_model.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class LessonScreen extends StatelessWidget {
-  final List<Item> lessonItems;
+  final LessonModel lesson;
   const LessonScreen({
     super.key,
-    required this.lessonItems,
+    required this.lesson,
   });
 
   @override
   Widget build(BuildContext context) {
-    final lessonProvider = Provider.of<LessonProvider>(context);
-    final courseProvider = Provider.of<CoursesProvider>(context);
-    final lesson = lessonProvider.lessonModel;
-    final courseId = lesson.assigned.course.id;
-    final course = courseProvider.coursesModel
-        .where((course) => course.id.toString() == courseId)
-        .first;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -39,11 +29,12 @@ class LessonScreen extends StatelessWidget {
                 height: AppLayout.getScreenHeight(),
                 child: Stack(
                   children: [
-                    videoHolder(lesson, course),
-                    playButton(context, lesson),
+                    videoHolder(context),
+                    LessonPlayButton(
+                      lesson: lesson,
+                    ),
                     LessonDetails(
                       lesson: lesson,
-                      lessonItems: lessonItems,
                     ),
                   ],
                 ),
@@ -55,7 +46,14 @@ class LessonScreen extends StatelessWidget {
     );
   }
 
-  Hero videoHolder(LessonModel lesson, CourseModel course) {
+  Hero videoHolder(BuildContext context) {
+    // final lessonProvider = Provider.of<LessonProvider>(context);
+    // final lesson = lessonProvider.lessonModel;
+    final courseProvider = Provider.of<CoursesProvider>(context);
+    final courseId = lesson.assigned.course.id;
+    final course = courseProvider.coursesModel
+        .where((course) => course.id.toString() == courseId)
+        .first;
     return Hero(
       tag: lesson.assigned.course.id,
       child: Stack(
@@ -80,49 +78,6 @@ class LessonScreen extends StatelessWidget {
             )),
           ),
         ],
-      ),
-    );
-  }
-
-  Positioned playButton(BuildContext context, LessonModel lesson) {
-    return Positioned(
-      top: AppLayout.getScreenHeight() * 0.2,
-      left: AppLayout.getScreenWidth() * 0.2,
-      right: AppLayout.getScreenWidth() * 0.2,
-      child: IconButton(
-        onPressed: () {
-          String htmlString = lesson.content;
-          String? video;
-          try {
-            final htmlWithoutComments =
-                htmlString.replaceAll(RegExp(r"<!--.*?-->"), "");
-            final document = parse(htmlWithoutComments);
-            video = document.querySelector("video")!.text;
-            printIfDebug(video);
-          } catch (e) {
-            printIfDebug("error: $e");
-            showErrorToast("No Video Found.");
-          }
-
-          if (video != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return VideoScreen(
-                    videoUrl: video!,
-                    lesson: lesson,
-                  );
-                },
-              ),
-            );
-          }
-        },
-        icon: Icon(
-          FontAwesomeIcons.circlePlay,
-          size: 80,
-          color: AppColors.successColor,
-        ),
       ),
     );
   }

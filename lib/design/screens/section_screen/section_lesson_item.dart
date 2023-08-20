@@ -32,13 +32,12 @@ class Section_LessonItemState extends State<SectionLessonItem> {
         try {
           showLoadingIndicator(context);
           await lessonProvider.fetchLessonModel(widget.item.id, token);
+        final lesson = lessonProvider.lessonModel;
           if (mounted) //if widget disposed don't navigate
           {
             Navigator.of(context).pop();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return LessonScreen(
-                lessonItems: widget.items,
-              );
+              return LessonScreen(lesson: lesson,);
             }));
           }
         } catch (e) {

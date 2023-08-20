@@ -10,11 +10,6 @@ class LessonProvider with ChangeNotifier{
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   final LessonApi lessonApi = LessonApi();
-
-  // void updateLessonModel(LessonModel newLessonModel){
-  //   _lessonModel = newLessonModel;
-  //   notifyListeners();
-  // }
   
   Future<void> fetchLessonModel(int lessonId, String authToken) async {
      try {

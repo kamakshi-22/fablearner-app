@@ -25,18 +25,13 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> validateAuthToken(String token) async{
-    try{
-       _isLoading = true;
-      notifyListeners();
-      bool isValidToken = await apiService.validateAuthToken(token);
-      _isLoading = false;
-      notifyListeners();
-      return isValidToken;
-    }catch(e){
-      _isLoading = false;
-      notifyListeners();
-      throw Exception(e);
-    }
+  Future<bool> validateAuthToken(String token) async {
+  try {
+    bool isValidToken = await apiService.validateAuthToken(token);
+    return isValidToken;
+  } catch (e) {
+    throw Exception(e);
   }
+}
+
 }

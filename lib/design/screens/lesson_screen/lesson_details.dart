@@ -1,23 +1,22 @@
 import 'package:fablearner_app/design/screens/lesson_screen/lesson_finish_button.dart';
 import 'package:fablearner_app/design/screens/lesson_screen/lesson_change_button.dart';
-import 'package:flutter/material.dart';
 import 'package:fablearner_app/models/lesson_model.dart';
+import 'package:fablearner_app/providers/lesson_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:fablearner_app/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:fablearner_app/models/courses_model.dart';
+import 'package:provider/provider.dart';
 
 class LessonDetails extends StatelessWidget {
   final LessonModel lesson;
-  final List<Item> lessonItems;
   const LessonDetails({
-    super.key,
-    required this.lesson,
-    required this.lessonItems,
+    super.key, required this.lesson,
   });
 
   @override
   Widget build(BuildContext context) {
+    
     bool isCompleted = lesson.results.status.contains("completed");
     return Container(
       width: double.infinity,
@@ -34,7 +33,7 @@ class LessonDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildLessonDetails(),
+            buildLessonDetails(lesson),
             LessonFinishButton(lesson: lesson),
             if (!isCompleted)
               Text(
@@ -43,17 +42,14 @@ class LessonDetails extends StatelessWidget {
                     .copyWith(color: AppColors.errorColor),
               ),
             const Spacer(),
-            LessonChangeButton(
-              lesson: lesson,
-              lessonItems: lessonItems,
-            ),
+            LessonChangeButton(),
           ],
         ),
       ),
     );
   }
 
-  Column buildLessonDetails() {
+  Column buildLessonDetails(LessonModel lesson) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
