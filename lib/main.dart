@@ -1,4 +1,5 @@
 import 'package:fablearner_app/design/screens/qr_scan_screen/qr_scan_screen.dart';
+import 'package:fablearner_app/providers/qr_scan_provider.dart';
 import 'package:fablearner_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,6 +34,7 @@ class MainApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => LessonProvider()),
       ChangeNotifierProvider(create: (_) => FinishLessonProvider()),
       ChangeNotifierProvider(create: (_) => DrawerStateProvider()),
+      ChangeNotifierProvider(create: (_) => QRScanProvider()),
     ];
     return MultiProvider(
       providers: appProviders,
@@ -61,6 +63,7 @@ class BuildEntryScreen extends StatelessWidget {
             return const Center(child: LoadingScreen());
           } else if (snapshot.hasError) {
             printIfDebug(snapshot.error);
+            showErrorToast("Please Login Again.");
             return const LoginScreen();
           } else {
             bool isValidToken = snapshot.data as bool;
@@ -73,8 +76,10 @@ class BuildEntryScreen extends StatelessWidget {
                     return const Center(child: LoadingScreen());
                   } else if (snapshot.hasError) {
                     printIfDebug(snapshot.error);
+                    showErrorToast("Please Login Again.");
                     return const LoginScreen();
                   } else {
+                    showSuccessToast("Login Successful.");
                     return const NavScreen();
                   }
                 },

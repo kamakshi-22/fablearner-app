@@ -1,3 +1,4 @@
+import 'package:fablearner_app/design/screens/home_screen/home_screen_drawer.dart';
 import 'package:fablearner_app/design/screens/notifications_screen/notifications_screen.dart';
 import 'package:fablearner_app/design/screens/home_screen/home_screen.dart';
 import 'package:fablearner_app/design/screens/qr_scan_screen/qr_scan_screen.dart';
@@ -25,6 +26,15 @@ class _NavScreenState extends State<NavScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final drawerProvider =
+        Provider.of<DrawerStateProvider>(context, listen: false);
+    drawerProvider.setDrawerState(false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -32,21 +42,19 @@ class _NavScreenState extends State<NavScreen> {
         child: Stack(
           children: [
             PageView(
-              controller: pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              children: const [
-                HomeScreen(),
-                QRScanScreen(),
-                NotificationsScreen(),
-              ]
-            ),
+                controller: pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                children: const [
+                  HomeScreen(),
+                  QRScanScreen(),
+                  NotificationsScreen(),
+                ]),
             Consumer<DrawerStateProvider>(
                 builder: (context, drawerProvider, child) {
-              printIfDebug(drawerProvider.isDrawerOpen);
               return Positioned(
                 bottom: 10,
                 left: 20,
