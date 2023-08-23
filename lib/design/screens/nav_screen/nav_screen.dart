@@ -26,16 +26,9 @@ class _NavScreenState extends State<NavScreen> {
   ];
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  Widget build(BuildContext context) {
     final drawerProvider =
         Provider.of<DrawerStateProvider>(context, listen: false);
-    drawerProvider.setDrawerState(false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -47,6 +40,7 @@ class _NavScreenState extends State<NavScreen> {
                   setState(() {
                     currentIndex = index;
                   });
+                   drawerProvider.setDrawerState(false);
                 },
                 children: const [
                   HomeScreen(),

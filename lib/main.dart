@@ -1,4 +1,3 @@
-import 'package:fablearner_app/design/screens/qr_scan_screen/qr_scan_screen.dart';
 import 'package:fablearner_app/providers/qr_scan_provider.dart';
 import 'package:fablearner_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -95,37 +94,3 @@ class BuildEntryScreen extends StatelessWidget {
     }
   }
 }
-
-
-/* class BuildEntryScreen extends StatelessWidget {
-  const BuildEntryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final String? userToken = UserPreferences.getUserToken();
-    //return QRScanScreen();
-
-    if (userToken != null) {
-      return FutureBuilder(
-        future: Provider.of<CoursesProvider>(context, listen: false)
-            .fetchCourseModel(userToken),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none) {
-            return const ErrorScreen(text: 'No connection found.');
-          } else if (snapshot.connectionState == ConnectionState.active ||
-              snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingScreen());
-          } else if (snapshot.hasError) {
-            printIfDebug(snapshot.error);
-            return const LoginScreen();
-          } else {
-            return const NavScreen();
-          }
-        },
-      );
-    } else {
-      return const LoginScreen();
-    }
-  }
-}
- */
